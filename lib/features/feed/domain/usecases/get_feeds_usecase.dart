@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:reviewit/features/feed/domain/entities/review.dart';
-import 'package:reviewit/features/feed/domain/repositories/review_repository.dart';
+
+import '../../data/repositories/review_repository_impl.dart';
+import '../repositories/review_repository.dart' hide reviewRepositoryProvider;
 
 class GetFeedsUseCase {
   final ReviewRepository _repository;
@@ -16,6 +18,7 @@ class GetFeedsUseCase {
 
 // Riverpod Provider로 UseCase 인스턴스를 제공
 final getFeedsUseCaseProvider = Provider<GetFeedsUseCase>((ref) {
+  // repository 인스턴스를 먼저 확보
   final repository = ref.watch(reviewRepositoryProvider);
   return GetFeedsUseCase(repository);
 });

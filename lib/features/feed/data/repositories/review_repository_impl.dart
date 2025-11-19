@@ -27,7 +27,6 @@ class ReviewRepositoryImpl implements ReviewRepository {
       // JSON 응답을 Review 모델 리스트로 변환
       final List<dynamic> data = response.data;
       return data.map((json) => Review.fromJson(json)).toList();
-
     } on DioException catch (e) {
       // Dio 에러 처리 (네트워크 문제, 404 등)
       throw Exception('Failed to fetch feeds: ${e.message}');
@@ -39,7 +38,6 @@ class ReviewRepositoryImpl implements ReviewRepository {
 
   @override
   Future<Review> getReviewDetail(String reviewId) {
-    // Day 4를 위해 미구현 상태로 둡니다.
     throw UnimplementedError();
   }
 }
