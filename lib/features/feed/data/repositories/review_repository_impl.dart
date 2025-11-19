@@ -16,11 +16,10 @@ class ReviewRepositoryImpl implements ReviewRepository {
       final response = await _apiService.dio.get(
         '/reviews',
         queryParameters: {
-          '_page': page,
-          '_limit': limit,
-          // 정렬 옵션 추가
-          '_sort': 'createdAt',
-          '_order': 'desc',
+          'page': page,
+          'limit': limit,
+          'sortBy': 'createdAt',
+          'order': 'desc',
         },
       );
 
