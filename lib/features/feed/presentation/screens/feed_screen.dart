@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:reviewit/features/feed/domain/entities/review.dart';
 import 'package:reviewit/features/feed/presentation/viewmodels/feed_list_view_model.dart';
 
@@ -59,29 +60,38 @@ class ReviewCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              review.mediaTitle,
-              style: Theme.of(context).textTheme.headlineSmall,
-            ),
-            Text(
-              '${review.rating}점 - ${review.mediaType}',
-              style: const TextStyle(color: Colors.grey),
-            ),
-            const SizedBox(height: 8),
-            Text(review.content),
-            const SizedBox(height: 8),
-            Text('작성자: ${review.author.nickname}', style: const TextStyle(fontWeight: FontWeight.bold)),
-            Text('좋아요: ${review.likeCount}, 댓글: ${review.commentCount}'),
-          ],
+    return InkWell(
+      onTap: () {
+        // GoRouter를 사용하여 상세 화면으로 이동
+        context.pushNamed(
+          'reviewDetail',
+          pathParameters: {'reviewId': review.id},
+        );
+      },
+      child: Card(
+        margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                review.mediaTitle,
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
+              Text(
+                '${review.rating}점 - ${review.mediaType}',
+                style: const TextStyle(color: Colors.grey),
+              ),
+              const SizedBox(height: 8),
+              Text(review.content),
+              const SizedBox(height: 8),
+              Text('작성자: ${review.author.nickname}', style: const TextStyle(fontWeight: FontWeight.bold)),
+              Text('좋아요: ${review.likeCount}, 댓글: ${review.commentCount}'),
+            ],
+          ),
         ),
-      ),
+      )
     );
   }
 }
