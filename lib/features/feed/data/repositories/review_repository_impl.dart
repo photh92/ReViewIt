@@ -36,8 +36,23 @@ class ReviewRepositoryImpl implements ReviewRepository {
   }
 
   @override
-  Future<Review> getReviewDetail(String reviewId) {
-    throw UnimplementedError();
+  Future<Review> getReviewDetail(String reviewId) async {
+    try {
+      // API: GET /reviews/{reviewId}
+      final response = await _apiService.dio.get('/reviews/$reviewId');
+
+      // 응답 데이터는 단일 JSON 객체여야 함
+      final reviewJson = response.data;
+
+      // JSON을 Review 모델로 변환
+      return Review.fromJson(reviewJson);
+    } on DioException catch (e) {
+      print('Dio Error in getReviewDetail: ${e.message}');
+      throw Exception('Failed to fetch review detail: ${e.message}');
+    } catch (e) {
+      print('General Error in getReviewDetail: $e');
+      throw Exception('An unexpected error occurred: $e');
+    }
   }
 }
 
