@@ -33,13 +33,15 @@ class ReviewDetailScreen extends ConsumerWidget {
 }
 
 // 상세 정보 표시를 위한 별도 위젯 (옵션)
-class _ReviewDetailContent extends StatelessWidget {
+class _ReviewDetailContent extends ConsumerWidget {
   final Review review;
 
   const _ReviewDetailContent({required this.review});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final viewModel = ref.watch(reviewDetailViewModelProvider(review.id).notifier); // Notifier 인스턴스 접근
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -50,17 +52,33 @@ class _ReviewDetailContent extends StatelessWidget {
           Text(review.mediaTitle, style: Theme.of(context).textTheme.titleLarge),
           const SizedBox(height: 16),
           Text(review.content),
-          const SizedBox(height: 24),
-          // 좋아요, 평점 등 기타 정보 표시
+
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('⭐️ 평점: ${review.rating.toStringAsFixed(1)}'),
-              Text('❤️ 좋아요: ${review.likeCount}개'),
+
+              // 좋아요 버튼
+              Row(
+                children: [
+                  IconButton(
+                    icon: Icon(
+                      review.isLiked ? Icons.favorite : Icons.favorite_border, // 상태에 따라 아이콘 변경
+                      color: review.isLiked ? Colors.red : Colors.grey,
+                    ),
+                    onPressed: viewModel.toggleLike, // ViewModel의 메서드 호출
+                  ),
+                  Text('${review.likeCount}개'),
+                ],
+              ),
             ],
           ),
           const SizedBox(height: 8),
+
           Text('작성일: ${review.createdAt}'), // 실제 앱에서는 날짜 포맷팅 필요
+
+          const SizedBox(height: 24),
+
         ],
       ),
     );

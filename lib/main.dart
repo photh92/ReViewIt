@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'config/routes/app_router.dart';
-import 'features/feed/presentation/screens/feed_screen.dart';
 
 void main() {
   runApp(

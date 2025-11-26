@@ -39,6 +39,6 @@ class FeedListViewModel extends AsyncNotifier<List<Review>> {
 
 // Provider 정의: UI가 관찰할 수 있는 최종 Provider를 노출
 final feedListViewModelProvider =
-AsyncNotifierProvider<FeedListViewModel, List<Review>>(() {
+AsyncNotifierProvider.autoDispose<FeedListViewModel, List<Review>>(() {
   return FeedListViewModel();
 });

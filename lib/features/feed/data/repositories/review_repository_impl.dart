@@ -54,6 +54,23 @@ class ReviewRepositoryImpl implements ReviewRepository {
       throw Exception('An unexpected error occurred: $e');
     }
   }
+
+  @override
+  Future<void> updateReviewLikeStatus(String reviewId, bool isLiked) async {
+    // MockAPI는 PATCH/PUT을 지원하지만, 여기서는 상태 업데이트를 시뮬레이션
+
+    // 💡 실제로는 여기서 Dio를 사용하여 PATCH/PUT 요청을 보냄
+    /* await _apiService.dio.patch(
+    '/reviews/$reviewId',
+    data: {'isLiked': isLiked},
+  );
+  */
+
+    // 서버 응답 지연을 시뮬레이션하여 Optimistic Update를 테스트
+    await Future.delayed(const Duration(milliseconds: 500));
+
+    print('Review ID $reviewId Like status updated to $isLiked on server (Simulated)');
+  }
 }
 
 // Provider를 실제 구현체로 연결합니다.

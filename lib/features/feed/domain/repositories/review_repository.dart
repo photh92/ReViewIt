@@ -8,11 +8,6 @@ abstract class ReviewRepository {
   // 특정 리뷰의 상세 정보를 가져옴
   Future<Review> getReviewDetail(String reviewId);
 
-  // 좋아요/댓글/리뷰 작성 등의 인터페이스를 정의
+  // 수정
+  Future<void> updateReviewLikeStatus(String reviewId, bool isLiked);
 }
-
-// Riverpod Provider로 Repository Interface를 제공할 준비
-final reviewRepositoryProvider = Provider<ReviewRepository>((ref) {
-  // Data Layer의 실제 구현체로 대체
-  throw UnimplementedError('Implementation not yet provided.');
-});
